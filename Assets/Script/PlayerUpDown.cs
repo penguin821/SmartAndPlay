@@ -7,12 +7,14 @@ public class PlayerUpDown : MonoBehaviour
     float gravity = -20.0f;
     float jumpSpeed =10.0f;
     Vector3 velocity;
+    Animator animator;
 
     CharacterController controller;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
         velocity = new Vector3(0, 0, 0);
     }
 
@@ -26,7 +28,10 @@ public class PlayerUpDown : MonoBehaviour
         if (controller.isGrounded)
         {
             if (Input.GetButtonDown("Jump"))
+            {
+                animator.SetTrigger("PlayerJump");
                 velocity.y = jumpSpeed;
+            }
         }
 
         velocity.y += (gravity * Time.deltaTime);

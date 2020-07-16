@@ -21,6 +21,10 @@ public class PlayerMove : MonoBehaviour
         float ang = Input.GetAxis("Horizontal");
         float ver = Input.GetAxis("Vertical");
 
+        if (Input.GetButtonDown("Jump"))
+            animator.SetTrigger("PlayerJump");
+
+
         if (ang != 0 || ver != 0)
         {
             float amtMove = moveSpeed * Time.deltaTime;
@@ -33,5 +37,8 @@ public class PlayerMove : MonoBehaviour
         }
         else
             animator.SetBool("PlayerRun", false);
+
+        //if (Input.GetMouseButtonDown(0))
+        //    animator.SetTrigger("PlayerAttack");
     }
 }
