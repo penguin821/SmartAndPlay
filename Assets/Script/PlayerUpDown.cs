@@ -29,7 +29,6 @@ public class PlayerUpDown : MonoBehaviour
         {
             if (Input.GetButtonDown("Jump"))
             {
-                animator.SetTrigger("PlayerJump");
                 velocity.y = jumpSpeed;
             }
         }

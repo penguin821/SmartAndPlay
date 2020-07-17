@@ -24,6 +24,9 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
             animator.SetTrigger("PlayerJump");
 
+        if (Input.GetButtonDown("Jump") && Input.GetKeyDown(KeyCode.S)) 
+            animator.SetTrigger("PlayerJumpBack");
+
 
         if (ang != 0 || ver != 0)
         {
@@ -33,12 +36,22 @@ public class PlayerMove : MonoBehaviour
             transform.Translate(Vector3.forward * ver * amtMove);
             transform.Rotate(Vector3.up * ang * amtRot);
 
-            animator.SetBool("PlayerRun", true);
+            if (Input.GetKeyDown(KeyCode.W))
+            {
+                animator.SetBool("PlayerRun", true);
+                animator.SetBool("PlayerRunBack", false);
+            }
+
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                animator.SetBool("PlayerRun", false);
+                animator.SetBool("PlayerRunBack", true);
+            }
         }
         else
+        {
             animator.SetBool("PlayerRun", false);
-
-        //if (Input.GetMouseButtonDown(0))
-        //    animator.SetTrigger("PlayerAttack");
+            animator.SetBool("PlayerRunBack", false);
+        }
     }
 }
