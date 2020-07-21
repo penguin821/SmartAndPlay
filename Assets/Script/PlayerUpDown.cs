@@ -30,6 +30,11 @@ public class PlayerUpDown : MonoBehaviour
             if (Input.GetButtonDown("Jump"))
             {
                 velocity.y = jumpSpeed;
+
+                if (Input.GetKeyDown(KeyCode.S))
+                    animator.SetTrigger("PlayerJumpBack");
+                else
+                    animator.SetTrigger("PlayerJump");
             }
         }
 
