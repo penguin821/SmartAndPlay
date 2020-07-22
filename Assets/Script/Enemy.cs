@@ -18,6 +18,18 @@ public class Enemy : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        pathfinder.SetDestination (player.transform.position);
+        
+    }
+
+    IEnumerator UpdatePath()
+    {
+        float refreshRate = 1f;
+
+        while (player != null) 
+        {
+            Vector3 targetPosition = new Vector3(player.transform.position.x, 0, player.transform.position.z);
+            pathfinder.SetDestination(targetPosition);
+            yield return new WaitForSeconds(refreshRate);
+        }
     }
 }
