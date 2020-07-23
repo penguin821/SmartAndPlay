@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMove : MonoBehaviour
+public class Player : LifeManagement
 {
     private float mouseSensitivity = 200.0f;
     private float moveSpeed = 5.0f;
@@ -15,14 +15,20 @@ public class PlayerMove : MonoBehaviour
     CharacterController controller;
     Vector3 moveDirection;
 
-    void Start()
+    protected override void Start()
     {
+        base.Start();
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void FixedUpdate()
+    {
+        PlayerMovement();
+    }
+
+    void PlayerMovement()
     {
         if (controller.isGrounded)
         {
@@ -36,7 +42,7 @@ public class PlayerMove : MonoBehaviour
             moveDirection = transform.TransformDirection(moveDirection);
 
             if (Input.GetKey(KeyCode.W))
-                animator.SetBool("PlayerRun",true);
+                animator.SetBool("PlayerRun", true);
             else
                 animator.SetBool("PlayerRun", false);
 

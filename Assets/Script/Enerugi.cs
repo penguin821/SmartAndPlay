@@ -4,10 +4,35 @@ using UnityEngine;
 
 public class Enerugi : MonoBehaviour
 {
-    public float Speed = 0.2f;
+    public LayerMask collisionMask;
+    float Speed = 10f;
+    float damage = 1f;
 
     void FixedUpdate()
     {
-        transform.Translate(Vector3.forward * Speed);
+        float moveSpeed = Speed * Time.deltaTime;
+        CheckCollisions(moveSpeed);
+        transform.Translate(Vector3.forward * moveSpeed);
+    }
+
+    void CheckCollisions(float moveSpeed)
+    {
+        Ray ray = new Ray(transform.position, transform.forward);
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit, moveSpeed, collisionMask, QueryTriggerInteraction.Collide))
+        {
+            OnHitObject(hit);
+        }
+    }
+
+    void OnHitObject(RaycastHit hit)
+    {
+        IDamage damageAbleObject = hit.collider.GetComponent<IDamage>();
+        if (damageAbleObject != null)
+        {
+            damageAbleObject.TakeHit(damage, hit);
+        }
+        GameObject.Destroy(gameObject);
     }
 }
