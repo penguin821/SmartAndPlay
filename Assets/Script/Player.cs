@@ -6,7 +6,7 @@ public class Player : LifeManagement
 {
     private float mouseSensitivity = 200.0f;
     private float moveSpeed = 5.0f;
-    private float rotateSpeed = 160.0f;
+    private float rotateSpeed = 260.0f;
 
     float gravity = 20.0f;
     float jumpSpeed = 10.0f;
