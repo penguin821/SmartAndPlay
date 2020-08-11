@@ -35,7 +35,7 @@ public class MapGenerator : MonoBehaviour
         currentMap= maps[mapIndex];
         tileMap = new Transform[currentMap.mapSize.x, currentMap.mapSize.y];
         System.Random prng = new System.Random(currentMap.seed);
-        GetComponent<BoxCollider>().size = new Vector3(currentMap.mapSize.x * tileSize, .5f, currentMap.mapSize.y * tileSize);
+        GetComponent<BoxCollider>().size = new Vector3(currentMap.mapSize.x * tileSize, .0f, currentMap.mapSize.y * tileSize);
 
         // 좌표 생성
         allTileCoords = new List<Coord>();

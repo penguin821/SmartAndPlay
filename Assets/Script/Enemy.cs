@@ -29,7 +29,7 @@ public class Enemy : LifeManagement
     {
         base.Start();
         pathfinder = GetComponent<NavMeshAgent>();
-        skinMaterial = GetComponent<Renderer>().material;
+        skinMaterial = GetComponent<MeshRenderer>().material;
         originalColor = skinMaterial.color;
 
         monster = GetComponent<Animator>();
@@ -38,7 +38,7 @@ public class Enemy : LifeManagement
         target = GameObject.FindGameObjectWithTag("Player").transform;
 
         myCollisionRadius = GetComponent<CapsuleCollider>().radius;
-        targetCollisionRadius = target.GetComponent<CapsuleCollider>().radius;
+        targetCollisionRadius = target.GetComponent<CharacterController>().radius;
 
         StartCoroutine(UpdatePath());
     }

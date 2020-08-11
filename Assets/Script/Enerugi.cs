@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Enerugi : MonoBehaviour
 {
-    public LayerMask collisionMask;
+    public LayerMask EnemyMask;
+    public LayerMask WallMask;
     float Speed = 10f;
     float damage = 1f;
 
@@ -20,10 +21,10 @@ public class Enerugi : MonoBehaviour
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, moveSpeed, collisionMask, QueryTriggerInteraction.Collide))
-        {
+        if (Physics.Raycast(ray, out hit, moveSpeed, EnemyMask, QueryTriggerInteraction.Collide))
             OnHitObject(hit);
-        }
+        if (Physics.Raycast(ray, out hit, moveSpeed, WallMask, QueryTriggerInteraction.Collide))
+            OnHitObject(hit);
     }
 
     void OnHitObject(RaycastHit hit)
