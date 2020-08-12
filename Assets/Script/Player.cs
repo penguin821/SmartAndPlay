@@ -62,9 +62,6 @@ public class Player : LifeManagement
 
                 moveDirection.y = jumpSpeed;
             }
-
-            if (Input.GetMouseButtonDown(0))
-                animator.SetTrigger("PlayerPunch");
         }
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
