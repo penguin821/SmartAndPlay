@@ -13,16 +13,20 @@ public class Enemy : LifeManagement
 
     NavMeshAgent pathfinder;
     Transform target;
+    LifeManagement targetLife;
     Material skinMaterial;
 
     Color originalColor;
 
     float attackDistanceThreshold = 0.5f;
     float timeBetweenAttacks = 1;
+    float damage = 1;
 
     float nextAttackTime;
     float myCollisionRadius;
     float targetCollisionRadius;
+
+    bool hasTarget;
 
     // Start is called before the first frame update
     protected override void Start()
@@ -34,25 +38,41 @@ public class Enemy : LifeManagement
 
         monster = GetComponent<Animator>();
 
-        currentState = State.Chasing;
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (GameObject.FindGameObjectWithTag("Player") != null)
+        {
+            currentState = State.Chasing;
+            hasTarget = true;
 
-        myCollisionRadius = GetComponent<CapsuleCollider>().radius;
-        targetCollisionRadius = target.GetComponent<CharacterController>().radius;
+            target = GameObject.FindGameObjectWithTag("Player").transform;
+            targetLife = target.GetComponent<LifeManagement>();
+            targetLife.OnDeath += OnTargetDeath;
 
-        StartCoroutine(UpdatePath());
+            myCollisionRadius = GetComponent<CapsuleCollider>().radius;
+            targetCollisionRadius = target.GetComponent<CharacterController>().radius;
+
+            StartCoroutine(UpdatePath());
+        }
+    }
+
+    void OnTargetDeath()
+    {
+        hasTarget = false;
+        currentState = State.Idle;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time > nextAttackTime)
+        if (hasTarget)
         {
-            float sqrDstToTarget = (target.position - transform.position).sqrMagnitude;
-            if (sqrDstToTarget < Mathf.Pow(attackDistanceThreshold + myCollisionRadius + targetCollisionRadius, 2)) 
+            if (Time.time > nextAttackTime)
             {
-                nextAttackTime = Time.time + timeBetweenAttacks;
-                StartCoroutine(Attack());
+                float sqrDstToTarget = (target.position - transform.position).sqrMagnitude;
+                if (sqrDstToTarget < Mathf.Pow(attackDistanceThreshold + myCollisionRadius + targetCollisionRadius, 2))
+                {
+                    nextAttackTime = Time.time + timeBetweenAttacks;
+                    StartCoroutine(Attack());
+                }
             }
         }
     }
@@ -70,9 +90,16 @@ public class Enemy : LifeManagement
         float percent = 0;
 
         skinMaterial.color = Color.red;
+        bool hasAppliedDamage = false;
 
         while (percent <= 1)
         {
+            if (percent >= .5f && !hasAppliedDamage)
+            {
+                hasAppliedDamage = true;
+                targetLife.TakeDamage(damage);
+            }
+
             monster.SetTrigger("EnemyKick");
             percent += Time.deltaTime * attackSpeed;
             float interpolation = (-Mathf.Pow(percent, 2) + percent) * 4;
@@ -90,7 +117,7 @@ public class Enemy : LifeManagement
     {
         float refreshRate = 0.25f;
 
-        while (target != null)
+        while (hasTarget)
         {
             if (currentState == State.Chasing)
             {

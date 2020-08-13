@@ -7,30 +7,49 @@ public class Spawner : MonoBehaviour
     public Wave[] waves;
     public Enemy enemy;
 
+    LifeManagement playerEntity;
+    Transform playerT;
+
     Wave currentWave;
     int currentWaveNum;
 
-    int enemiesRemain;
-    float nextSpawn;
+    int enemiesRemainToSpawn;
+    int enemiesRemainAlive;
+    float nextSpawnTime;
 
     MapGenerator map;
 
     void Start()
     {
+        playerEntity = FindObjectOfType<Player>();
+        playerT = playerEntity.transform;
+
         map = FindObjectOfType<MapGenerator>();
         NextWave();
     }
 
     void Update()
     {
-        if (enemiesRemain > 0 && Time.time > nextSpawn)
+        if (enemiesRemainToSpawn > 0 && Time.time > nextSpawnTime)
         {
-            enemiesRemain--;
-            nextSpawn = Time.time + currentWave.timeBetweenSpawns;
+            enemiesRemainToSpawn--;
+            nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
+
+                //Enemy spawnedEnemy = Instantiate(enemy, Vector3.zero, Quaternion.identity) as Enemy;
+                //spawnedEnemy.OnDeath += OnEnemyDeath;
 
             StartCoroutine(SpawnEnemy());
         }
     }
+
+    void OnEnemyDeath()
+    {
+        enemiesRemainAlive--;
+
+        if (enemiesRemainAlive == 0)
+            NextWave();
+    }
+
 
     IEnumerator SpawnEnemy()
     {
@@ -51,15 +70,21 @@ public class Spawner : MonoBehaviour
         }
 
         Enemy spawnedEnemy = Instantiate(enemy, randomTile.position + Vector3.up, Quaternion.identity) as Enemy;
+        print("spawn");
        // spawnedEnemy.OnDeath += OnEnemyDeath;
     }
 
     void NextWave()
     {
         currentWaveNum++;
-        currentWave = waves[currentWaveNum - 1];
+        print("Wave : " + currentWaveNum);
+        if (currentWaveNum - 1 < waves.Length)
+        {
+            currentWave = waves[currentWaveNum - 1];
 
-        enemiesRemain = currentWave.enemyCount;
+            enemiesRemainToSpawn = currentWave.enemyCount;
+            enemiesRemainAlive = enemiesRemainToSpawn;
+        }
     }
 
     [System.Serializable]
