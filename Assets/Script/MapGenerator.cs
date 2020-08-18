@@ -25,9 +25,15 @@ public class MapGenerator : MonoBehaviour
 
     Map currentMap;
 
-    void Start()
+    void Awake()
     {
-        GenerateMap();  
+        FindObjectOfType<Spawner>().OnNewWave += OnNewWave;
+    }
+
+    void OnNewWave(int waveNumber)
+    {
+        mapIndex = waveNumber - 1;
+        GenerateMap();
     }
 
     public void GenerateMap()
@@ -174,6 +180,15 @@ public class MapGenerator : MonoBehaviour
     Vector3 CoordToPosition(int x, int y)
     {
         return new Vector3(-currentMap.mapSize.x / 2f + 0.5f + x, 0, -currentMap.mapSize.y / 2f + 0.5f + y) * tileSize;
+    }
+
+    public Transform GetTileFromPosition(Vector3 position)
+    {
+        int x = Mathf.RoundToInt(position.x / tileSize + (currentMap.mapSize.x - 1) / 2f);
+        int y = Mathf.RoundToInt(position.z / tileSize + (currentMap.mapSize.y - 1) / 2f);
+        x = Mathf.Clamp(x, 0, tileMap.GetLength(0) - 1);
+        y = Mathf.Clamp(y, 0, tileMap.GetLength(1) - 1);
+        return tileMap[x, y];
     }
 
     public Coord GetRandomCoord()

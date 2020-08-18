@@ -17,25 +17,27 @@ public class Enerugi : MonoBehaviour
         transform.Translate(Vector3.forward * moveSpeed);
     }
 
+    // E15 8분 52초에서 다시 시작
+
     void CheckCollisions(float moveSpeed)
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
         if (Physics.Raycast(ray, out hit, moveSpeed, EnemyMask, QueryTriggerInteraction.Collide))
-            OnHitObject(hit);
+            OnHitObject(hit.collider,hit.point);
         if (Physics.Raycast(ray, out hit, moveSpeed, WallMask, QueryTriggerInteraction.Collide))
-            OnHitObject(hit);
+            OnHitObject(hit.collider, hit.point);
         if (Physics.Raycast(ray, out hit, moveSpeed, FloorMask, QueryTriggerInteraction.Collide))
-            OnHitObject(hit);
+            OnHitObject(hit.collider, hit.point);
     }
 
-    void OnHitObject(RaycastHit hit)
+    void OnHitObject(Collider c, Vector3 hitPoint)
     {
-        IDamage damageAbleObject = hit.collider.GetComponent<IDamage>();
+        IDamage damageAbleObject = c.GetComponent<IDamage>();
         if (damageAbleObject != null)
         {
-            damageAbleObject.TakeHit(damage, hit);
+            damageAbleObject.TakeHit(damage);
         }
         GameObject.Destroy(gameObject);
     }

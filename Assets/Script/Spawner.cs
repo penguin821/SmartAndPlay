@@ -19,10 +19,16 @@ public class Spawner : MonoBehaviour
 
     MapGenerator map;
 
+    bool isDisabled;
+
+    public event System.Action<int> OnNewWave;
+
     void Start()
     {
         playerEntity = FindObjectOfType<Player>();
         playerT = playerEntity.transform;
+
+        playerEntity.OnDeath += OnPlayerDeath;
 
         map = FindObjectOfType<MapGenerator>();
         NextWave();
@@ -30,16 +36,21 @@ public class Spawner : MonoBehaviour
 
     void Update()
     {
-        if (enemiesRemainToSpawn > 0 && Time.time > nextSpawnTime)
+        if (!isDisabled)
         {
-            enemiesRemainToSpawn--;
-            nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
+            if (enemiesRemainToSpawn > 0 && Time.time > nextSpawnTime)
+            {
+                enemiesRemainToSpawn--;
+                nextSpawnTime = Time.time + currentWave.timeBetweenSpawns;
 
-                //Enemy spawnedEnemy = Instantiate(enemy, Vector3.zero, Quaternion.identity) as Enemy;
-                //spawnedEnemy.OnDeath += OnEnemyDeath;
-
-            StartCoroutine(SpawnEnemy());
+                StartCoroutine(SpawnEnemy());
+            }
         }
+    }
+
+    void OnPlayerDeath()
+    {
+        isDisabled = true;
     }
 
     void OnEnemyDeath()
@@ -49,7 +60,6 @@ public class Spawner : MonoBehaviour
         if (enemiesRemainAlive == 0)
             NextWave();
     }
-
 
     IEnumerator SpawnEnemy()
     {
@@ -70,20 +80,30 @@ public class Spawner : MonoBehaviour
         }
 
         Enemy spawnedEnemy = Instantiate(enemy, randomTile.position + Vector3.up, Quaternion.identity) as Enemy;
-        print("spawn");
-       // spawnedEnemy.OnDeath += OnEnemyDeath;
+        spawnedEnemy.OnDeath += OnEnemyDeath;
+    }
+
+    void ResetPlayer()
+    {
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 1;
     }
 
     void NextWave()
     {
         currentWaveNum++;
-        print("Wave : " + currentWaveNum);
+        
         if (currentWaveNum - 1 < waves.Length)
         {
             currentWave = waves[currentWaveNum - 1];
 
             enemiesRemainToSpawn = currentWave.enemyCount;
             enemiesRemainAlive = enemiesRemainToSpawn;
+
+            if(OnNewWave!=null)
+            {
+                OnNewWave(currentWaveNum);
+            }
+            ResetPlayer();
         }
     }
 

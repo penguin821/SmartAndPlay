@@ -15,7 +15,7 @@ public class LifeManagement : MonoBehaviour,IDamage
         health = startingHealth;
     }
 
-    public void TakeHit(float damage, RaycastHit hit)
+    public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         //여기에 hit 변수 사용해서 뭐 만들거
         TakeDamage(damage);
@@ -31,6 +31,7 @@ public class LifeManagement : MonoBehaviour,IDamage
         }
     }
 
+    [ContextMenu("Self Destruct")]
     protected void Die()
     {
         dead = true;
