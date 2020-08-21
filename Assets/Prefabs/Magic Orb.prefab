@@ -4770,10 +4770,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b9f365cff306704483d4e4a0eb65869, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  fireMode: 1
   muzzle: {fileID: 527075728134121621}
-  enerugi: {fileID: 5702780271624800437, guid: 1a48b1ff90f12e947ba3224b3b5f4744, type: 3}
-  msBetweenShots: 100
+  enerugi: {fileID: 7014065350086017805, guid: feb18e8d47ef3814c867bc7df635b66a, type: 3}
+  msBetweenShots: 300
   muzzleVelocity: 25
+  burstCount: 0
 --- !u!1 &5604072729752455214
 GameObject:
   m_ObjectHideFlags: 0

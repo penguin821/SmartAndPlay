@@ -69,7 +69,11 @@ public class Player : LifeManagement
 
             if (Input.GetMouseButton(0))
             {
-                orbController.Shoot();
+                orbController.OnTriggerHold();
+            }
+            if (Input.GetMouseButtonUp(0))
+            {
+                orbController.OnTriggerRelease();
             }
         }
         moveDirection.y -= gravity * Time.deltaTime;

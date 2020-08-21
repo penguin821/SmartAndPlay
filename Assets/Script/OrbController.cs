@@ -26,9 +26,15 @@ public class OrbController : MonoBehaviour
         equippedOrb.transform.parent = orbHold;
     }
 
-    public void Shoot()
+    public void OnTriggerHold()
     {
         if (equippedOrb != null)
-            equippedOrb.Shoot();
+            equippedOrb.OnTriggerHold();
+    }
+
+    public void OnTriggerRelease()
+    {
+        if (equippedOrb != null)
+            equippedOrb.OnTriggerRelease();
     }
 }

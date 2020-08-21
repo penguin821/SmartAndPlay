@@ -4,20 +4,58 @@ using UnityEngine;
 
 public class Orb : MonoBehaviour
 {
-    public Transform muzzle;
+    public enum FireMode { Auto,Burst,Single};
+    public FireMode fireMode;
+
+    public Transform[] projectileSpawn;
     public Enerugi enerugi;
     public float msBetweenShots = 100;
     public float muzzleVelocity = 35;
+    public int burstCount;
 
     float nextShotTime;
 
-    public void Shoot()
+    bool triggerReleasedSinceLastShot;
+    int shotRemaining;
+
+    void Start()
+    {
+        shotRemaining = burstCount;
+    }
+
+    void Shoot()
     {
         if (Time.time > nextShotTime)
         {
-            nextShotTime = Time.time + msBetweenShots / 1000;
-            Enerugi newEnerugi = Instantiate(enerugi, muzzle.position, muzzle.rotation) as Enerugi;
-            newEnerugi.SetSpeed(muzzleVelocity);
+            if(fireMode==FireMode.Burst)
+            {
+                if (shotRemaining == 0)
+                    return;
+                shotRemaining--;
+            }
+            else if (fireMode == FireMode.Single)
+            {
+                if (!triggerReleasedSinceLastShot)
+                    return;
+            }
+
+            for (int i = 0; i < projectileSpawn.Length; i++)
+            {
+                nextShotTime = Time.time + msBetweenShots / 1000;
+                Enerugi newEnerugi = Instantiate(enerugi, projectileSpawn[i].position, projectileSpawn[i].rotation) as Enerugi;
+                newEnerugi.SetSpeed(muzzleVelocity);
+            }
         }
+    }
+
+    public void OnTriggerHold()
+    {
+        Shoot();
+        triggerReleasedSinceLastShot = false;
+    }
+    public void OnTriggerRelease()
+    {
+        triggerReleasedSinceLastShot = true;
+        shotRemaining = burstCount;
     }
 }
