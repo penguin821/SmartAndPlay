@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+[RequireComponent(typeof(OrbController))]
 public class Player : LifeManagement
 {
     private float mouseSensitivity = 200.0f;
@@ -14,11 +16,13 @@ public class Player : LifeManagement
     private Animator animator;
     CharacterController controller;
     Vector3 moveDirection;
+    OrbController orbController;
 
     protected override void Start()
     {
         base.Start();
         controller = GetComponent<CharacterController>();
+        orbController = GetComponent<OrbController>();
         animator = GetComponent<Animator>();
     }
 
@@ -61,6 +65,11 @@ public class Player : LifeManagement
                     animator.SetTrigger("PlayerJump");
 
                 moveDirection.y = jumpSpeed;
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                orbController.Shoot();
             }
         }
         moveDirection.y -= gravity * Time.deltaTime;

@@ -15,13 +15,13 @@ public class LifeManagement : MonoBehaviour,IDamage
         health = startingHealth;
     }
 
-    public void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
+    public virtual void TakeHit(float damage, Vector3 hitPoint, Vector3 hitDirection)
     {
         //여기에 hit 변수 사용해서 뭐 만들거
         TakeDamage(damage);
     }
 
-    public void TakeDamage(float damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
 

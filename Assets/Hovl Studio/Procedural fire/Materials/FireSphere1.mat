@@ -4,11 +4,12 @@
 Material:
   serializedVersion: 6
   m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
   m_Name: FireSphere1
   m_Shader: {fileID: 4800000, guid: 1d4a9c916d62a324e90c32798caf3f13, type: 3}
-  m_ShaderKeywords: 
+  m_ShaderKeywords: _USEBLACK_ON
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -21,9 +22,13 @@ Material:
     - _MainTex:
         m_Texture: {fileID: 2800000, guid: 31679c4b857f0d140bd9566b86eb8674, type: 3}
         m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
+        m_Offset: {x: 1, y: 1}
     - _TextureSample0:
         m_Texture: {fileID: 2800000, guid: c8ada4fdced7c07409542d983b96835e, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - _tex3coord:
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _texcoord:
@@ -31,13 +36,13 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
-    - _Amplitude: 1
+    - _Amplitude: 0
     - _Depthpower: 1
-    - _Emission: 2
-    - _Frequency: 10
+    - _Emission: 1.5
+    - _Frequency: 1
     - _Opacity: 1
     - _StartFrequency: 2
-    - _Useblack: 0
+    - _Useblack: 1
     - _Usedepth: 0
     - __dirty: 1
     m_Colors:

@@ -4771,7 +4771,7 @@ GameObject:
   - component: {fileID: 380064250908938206}
   - component: {fileID: 7014065350086017805}
   - component: {fileID: 8182044321491287574}
-  - component: {fileID: 8195997508520284986}
+  - component: {fileID: 4819552673902781034}
   m_Layer: 0
   m_Name: ErekiBall2
   m_TagString: Untagged
@@ -4787,7 +4787,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380064250895183644}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.2414913, y: 0.7442474, z: 5.625622}
+  m_LocalPosition: {x: 5.55155, y: 0.19964026, z: 3.551084}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 380064250894824250}
@@ -9533,15 +9533,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39e849ebc0b3549479c42d2887fb1188, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyMask:
+  collisionMask:
     serializedVersion: 2
     m_Bits: 256
-  WallMask:
-    serializedVersion: 2
-    m_Bits: 512
-  FloorMask:
-    serializedVersion: 2
-    m_Bits: 1024
 --- !u!114 &8182044321491287574
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9555,19 +9549,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Time: 2
---- !u!135 &8195997508520284986
-SphereCollider:
+--- !u!33 &4819552673902781034
+MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 380064250895183644}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 0
-  serializedVersion: 2
-  m_Radius: 0.8
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &380064250895183646
 GameObject:
   m_ObjectHideFlags: 0

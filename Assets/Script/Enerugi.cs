@@ -4,41 +4,71 @@ using UnityEngine;
 
 public class Enerugi : MonoBehaviour
 {
-    public LayerMask EnemyMask;
-    public LayerMask WallMask;
-    public LayerMask FloorMask;
-    float Speed = 10f;
-    float damage = 1f;
+    public LayerMask collisionMask;
 
-    void FixedUpdate()
+    //public LayerMask EnemyMask;
+    //public LayerMask WallMask;
+    //public LayerMask FloorMask;
+    float speed = 10;
+    float damage = 1;
+
+    float lifetime = 3;
+    float skinWidth = 0.1f;
+
+    void Start()
     {
-        float moveSpeed = Speed * Time.deltaTime;
-        CheckCollisions(moveSpeed);
-        transform.Translate(Vector3.forward * moveSpeed);
+        Destroy(gameObject, lifetime);
+
+        Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
+        if (initialCollisions.Length > 0)
+        {
+            OnHitObject(initialCollisions[0], transform.position);
+        }
     }
 
-    // E15 8분 52초에서 다시 시작
+    public void SetSpeed(float newSpeed)
+    {
+        speed = newSpeed;
+    }
 
-    void CheckCollisions(float moveSpeed)
+    void Update()
+    {
+        float moveDistance = speed * Time.deltaTime;
+        CheckCollisions(moveDistance);
+        transform.Translate(Vector3.forward * Time.deltaTime * speed);
+    }
+
+    void CheckCollisions(float moveDistance)
     {
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
 
-        if (Physics.Raycast(ray, out hit, moveSpeed, EnemyMask, QueryTriggerInteraction.Collide))
+        if (Physics.Raycast(ray, out hit, moveDistance, collisionMask, QueryTriggerInteraction.Collide))
+        {
             OnHitObject(hit.collider,hit.point);
-        if (Physics.Raycast(ray, out hit, moveSpeed, WallMask, QueryTriggerInteraction.Collide))
-            OnHitObject(hit.collider, hit.point);
-        if (Physics.Raycast(ray, out hit, moveSpeed, FloorMask, QueryTriggerInteraction.Collide))
-            OnHitObject(hit.collider, hit.point);
+        }
     }
 
     void OnHitObject(Collider c, Vector3 hitPoint)
     {
-        IDamage damageAbleObject = c.GetComponent<IDamage>();
-        if (damageAbleObject != null)
+        IDamage damageableObject = c.GetComponent<IDamage>();
+        if (damageableObject != null)
         {
-            damageAbleObject.TakeHit(damage);
+            damageableObject.TakeHit(damage,hitPoint,transform.forward);
         }
         GameObject.Destroy(gameObject);
     }
 }
+
+//if (Physics.Raycast(ray, out hit, moveDistance, EnemyMask, QueryTriggerInteraction.Collide))
+//{
+//    OnHitObject(hit);
+//}
+//if (Physics.Raycast(ray, out hit, moveDistance, WallMask, QueryTriggerInteraction.Collide))
+//{
+//    OnHitObject(hit);
+//}
+//if (Physics.Raycast(ray, out hit, moveDistance, FloorMask, QueryTriggerInteraction.Collide))
+//{
+//    OnHitObject(hit);
+//}
