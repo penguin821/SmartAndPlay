@@ -18,6 +18,8 @@ public class Orb : MonoBehaviour
     bool triggerReleasedSinceLastShot;
     int shotRemaining;
 
+    public AudioClip shootAudio;
+
     void Start()
     {
         shotRemaining = burstCount;
@@ -45,6 +47,8 @@ public class Orb : MonoBehaviour
                 Enerugi newEnerugi = Instantiate(enerugi, projectileSpawn[i].position, projectileSpawn[i].rotation) as Enerugi;
                 newEnerugi.SetSpeed(muzzleVelocity);
             }
+
+            AudioManager.instance.PlaySound(shootAudio, transform.position);
         }
     }
 

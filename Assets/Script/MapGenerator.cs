@@ -190,6 +190,7 @@ public class MapGenerator : MonoBehaviour
         x = Mathf.Clamp(x, 0, tileMap.GetLength(0) - 1);
         y = Mathf.Clamp(y, 0, tileMap.GetLength(1) - 1);
         return tileMap[x, y];
+        Debug.Log(tileMap);
     }
 
     public Coord GetRandomCoord()

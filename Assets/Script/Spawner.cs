@@ -101,7 +101,7 @@ public class Spawner : MonoBehaviour
 
     void ResetPlayer()
     {
-        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 1;
+        playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3;
     }
 
     void NextWave()

@@ -2001,7 +2001,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   orbHold: {fileID: 0}
-  startingOrb: {fileID: 0}
+  startingOrb: {fileID: 4260027104963597991, guid: 45b2e05ae70ef8f44a907040ee8fb009,
+    type: 3}
 --- !u!114 &7289741045099015447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2015,8 +2016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingHealth: 10
-  characterBody: {fileID: 0}
-  cameraArm: {fileID: 0}
+  crosshairs: {fileID: 0}
 --- !u!23 &-7913461047355067813
 MeshRenderer:
   m_ObjectHideFlags: 0

@@ -29,6 +29,7 @@ public class Player : LifeManagement
     // Update is called once per frame
     void FixedUpdate()
     {
+        BounderyDeath();
         PlayerMovement();
     }
 
@@ -39,18 +40,26 @@ public class Player : LifeManagement
             float ang = Input.GetAxis("Horizontal");
             float ver = Input.GetAxis("Vertical");
 
-            float amtRot = rotateSpeed * Time.deltaTime;
-            transform.Rotate(Vector3.up * ang * amtRot);
+            // float amtRot = rotateSpeed * Time.deltaTime;
+            // transform.Rotate(Vector3.up * ang * amtRot);
 
-            moveDirection = new Vector3(0, 0, ver * moveSpeed);
+            moveDirection = new Vector3(ang * moveSpeed, 0, ver * moveSpeed);
             moveDirection = transform.TransformDirection(moveDirection);
 
             if (Input.GetKey(KeyCode.W))
                 animator.SetBool("PlayerRun", true);
             else
-            {
                 animator.SetBool("PlayerRun", false);
-            }
+
+            if (Input.GetKey(KeyCode.A))
+                animator.SetBool("PlayerLeftRun", true);
+            else
+                animator.SetBool("PlayerLeftRun", false);
+
+            if (Input.GetKey(KeyCode.D))
+                animator.SetBool("PlayerRightRun", true);
+            else
+                animator.SetBool("PlayerRightRun", false);
 
             if (Input.GetKey(KeyCode.S))
                 animator.SetBool("PlayerRunBack", true);
@@ -78,5 +87,11 @@ public class Player : LifeManagement
         }
         moveDirection.y -= gravity * Time.deltaTime;
         controller.Move(moveDirection * Time.deltaTime);
+    }
+
+    void BounderyDeath()
+    {
+        if (transform.position.y < -10f)
+            TakeDamage(health);
     }
 }

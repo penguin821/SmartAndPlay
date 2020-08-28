@@ -4,7 +4,7 @@ using UnityEngine;
 public class LifeManagement : MonoBehaviour,IDamage
 {
     public float startingHealth;
-    protected float health;
+    public float health { get; protected set; }
     protected bool dead;
 
     public event System.Action OnDeath;
