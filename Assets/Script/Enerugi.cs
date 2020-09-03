@@ -5,6 +5,8 @@ using UnityEngine;
 public class Enerugi : MonoBehaviour
 {
     public LayerMask collisionMask;
+    public LayerMask collisionMask1;
+    public LayerMask collisionMask2;
 
     //public LayerMask EnemyMask;
     //public LayerMask WallMask;
@@ -20,9 +22,20 @@ public class Enerugi : MonoBehaviour
         Destroy(gameObject, lifetime);
 
         Collider[] initialCollisions = Physics.OverlapSphere(transform.position, .1f, collisionMask);
+        Collider[] initialCollisions1 = Physics.OverlapSphere(transform.position, .1f, collisionMask1);
+        Collider[] initialCollisions2 = Physics.OverlapSphere(transform.position, .1f, collisionMask2);
+
         if (initialCollisions.Length > 0)
         {
             OnHitObject(initialCollisions[0], transform.position);
+        }
+        if (initialCollisions1.Length > 0)
+        {
+            OnHitObject(initialCollisions1[0], transform.position);
+        }
+        if (initialCollisions2.Length > 0)
+        {
+            OnHitObject(initialCollisions2[0], transform.position);
         }
     }
 
@@ -46,6 +59,14 @@ public class Enerugi : MonoBehaviour
         if (Physics.Raycast(ray, out hit, moveDistance, collisionMask, QueryTriggerInteraction.Collide))
         {
             OnHitObject(hit.collider,hit.point);
+        }
+        if (Physics.Raycast(ray, out hit, moveDistance, collisionMask1, QueryTriggerInteraction.Collide))
+        {
+            OnHitObject(hit.collider, hit.point);
+        }
+        if (Physics.Raycast(ray, out hit, moveDistance, collisionMask2, QueryTriggerInteraction.Collide))
+        {
+            OnHitObject(hit.collider, hit.point);
         }
     }
 

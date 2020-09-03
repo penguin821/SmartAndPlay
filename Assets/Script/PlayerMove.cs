@@ -58,7 +58,7 @@ public class PlayerMove : MonoBehaviour
         Vector3 moveDir = lookForward * moveInput.y + lookRight * moveInput.x;
 
         characterBody.forward = lookForward;
-        transform.position += moveDir * Time.deltaTime * 5f;
+        //transform.position += moveDir * Time.deltaTime * 5f;
 
         crosshairs.Rotate(0f, 0f, 5f);
     }

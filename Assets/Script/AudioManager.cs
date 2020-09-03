@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public float sfxVolumePercent { get; private set; }
     public float musicVolumePercent { get; private set; }
 
+    AudioSource sfx2Dsource;
     AudioSource[] musicSources;
     int activeMusicSourceIndex;
 
@@ -38,6 +39,9 @@ public class AudioManager : MonoBehaviour
                 musicSources[i] = newMusicSource.AddComponent<AudioSource>();
                 newMusicSource.transform.parent = transform;
             }
+            GameObject newSfx2DSource = new GameObject("2D sfx source");
+            sfx2Dsource = newSfx2DSource.AddComponent<AudioSource>();
+            newSfx2DSource.transform.parent = transform;
 
             audioListener = FindObjectOfType<AudioListener>().transform;
             if (FindObjectOfType<Player>() != null)
@@ -101,6 +105,11 @@ public class AudioManager : MonoBehaviour
     public void PlaySound(string soundName,Vector3 pos)
     {
         PlaySound(library.GetClipFromName(soundName), pos);
+    }
+
+    public void PlaySound2D(string soundName)
+    {
+        sfx2Dsource.PlayOneShot(library.GetClipFromName(soundName), sfxVolumePercent * masterVolumePercent);
     }
 
     IEnumerator AnimateMusicCrossfade(float duration)

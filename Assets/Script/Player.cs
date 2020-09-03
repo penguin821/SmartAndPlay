@@ -40,8 +40,8 @@ public class Player : LifeManagement
             float ang = Input.GetAxis("Horizontal");
             float ver = Input.GetAxis("Vertical");
 
-            // float amtRot = rotateSpeed * Time.deltaTime;
-            // transform.Rotate(Vector3.up * ang * amtRot);
+            //float amtRot = rotateSpeed * Time.deltaTime;
+            //transform.Rotate(Vector3.up * ang * amtRot);
 
             moveDirection = new Vector3(ang * moveSpeed, 0, ver * moveSpeed);
             moveDirection = transform.TransformDirection(moveDirection);

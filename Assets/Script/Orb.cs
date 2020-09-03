@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Orb : MonoBehaviour
 {
-    public enum FireMode { Auto,Burst,Single};
+    public enum FireMode { Auto, Burst, Single };
     public FireMode fireMode;
 
     public Transform[] projectileSpawn;
@@ -29,7 +29,7 @@ public class Orb : MonoBehaviour
     {
         if (Time.time > nextShotTime)
         {
-            if(fireMode==FireMode.Burst)
+            if (fireMode == FireMode.Burst)
             {
                 if (shotRemaining == 0)
                     return;
@@ -50,6 +50,15 @@ public class Orb : MonoBehaviour
 
             AudioManager.instance.PlaySound(shootAudio, transform.position);
         }
+
+        if (ScoreKeeper.score >= 100)
+        {
+            msBetweenShots = 100;
+            muzzleVelocity = 30;
+        }
+
+        //if (ScoreKeeper.score >= 500)
+        //    fireMode = FireMode.Burst;
     }
 
     public void OnTriggerHold()

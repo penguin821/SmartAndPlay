@@ -9535,6 +9535,12 @@ MonoBehaviour:
   collisionMask:
     serializedVersion: 2
     m_Bits: 256
+  collisionMask1:
+    serializedVersion: 2
+    m_Bits: 512
+  collisionMask2:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!114 &8182044321491287574
 MonoBehaviour:
   m_ObjectHideFlags: 0

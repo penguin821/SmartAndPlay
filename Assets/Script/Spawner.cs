@@ -10,7 +10,9 @@ public class Spawner : MonoBehaviour
     public Enemy enemy;
 
     LifeManagement playerEntity;
+    PlayerMove playerMove;
     Transform playerT;
+    Transform playerTT;
 
     Wave currentWave;
     int currentWaveNum;
@@ -28,7 +30,9 @@ public class Spawner : MonoBehaviour
     void Start()
     {
         playerEntity = FindObjectOfType<Player>();
+        playerMove = FindObjectOfType<PlayerMove>();
         playerT = playerEntity.transform;
+        playerTT = playerMove.transform;
 
         playerEntity.OnDeath += OnPlayerDeath;
 
@@ -102,6 +106,7 @@ public class Spawner : MonoBehaviour
     void ResetPlayer()
     {
         playerT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3;
+        playerTT.position = map.GetTileFromPosition(Vector3.zero).position + Vector3.up * 3;
     }
 
     void NextWave()
